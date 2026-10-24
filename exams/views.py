@@ -25,24 +25,23 @@ class AssessmentCreateListView(APIView):
         form_data=request.data
         serailizer_instance=AssessmentSerializer(data=form_data)
         if serailizer_instance.is_valid():
-            cleaned_data=serailizer_instance.validated_data
+            serailizer_instance.save(created_by=request.user)              
+            # cleaned_data=serailizer_instance.validated_data    #def perform_create(self,serializer)
+            # exam_date=cleaned_data.get("exam_date")             #serializers.save(created_by=self.request.user) must inherit from createAPIVIEW
+            # start_time=cleaned_data.get("start_time")
+            # duration=cleaned_data.get("duration")
+            # end_date_time = datetime.combine(exam_date,start_time)+timedelta(hours=duration)
+            # end_time = end_date_time.time()
+            # qs=AssessmentModel.objects.create(created_by=request.user,**cleaned_data,end_time=end_datetime.time())
+            # serializer_instance=AssessmentSerializer(qs)
 
-            exam_date=cleaned_data.get("exam_date")
-            start_time=cleaned_data.get("start_time")
-            duration=cleaned_data.get("duration")
-
-            start_datetime = datetime.combine(exam_date.date(),start_time)
-            end_datetime = start_datetime + timedelta(minutes=duration)
-
-            qs=AssessmentModel.objects.create(created_by=request.user,**cleaned_data,end_time=end_datetime.time())
-            serializer_instance=AssessmentSerializer(qs)
-            return Response(data=serializer_instance.data)
+            return Response(data=serailizer_instance.data)
         else:
-                return Response(data=serializer_instance.errors)
+                return Response(data=serailizer_instance.errors)
 
 class AssessmentRetriveUpdateDeleteView(RetrieveAPIView,UpdateAPIView,DestroyAPIView):
      authentication_classes=[authentication.TokenAuthentication]
-     permission_classes=[IsOwner]
+     permission_classes=[permissions.IsAdminUser]
      serializer_class=AssessmentSerializer
      queryset=AssessmentModel.objects.all()
 
