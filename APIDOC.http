@@ -1,0 +1,86 @@
+#api call for creating user account
+###
+POST http://127.0.0.1:8000/accounts/admin/register/
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "email":"admin@gmail.com",
+    "password":"admin123",
+    "phone":7654283922
+}
+
+#api call for creating token for user account
+###
+POST http://127.0.0.1:8000/accounts/token/
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"admin123"
+}
+
+
+#api call for creating student account
+###
+POST http://127.0.0.1:8000/accounts/student/register/
+Content-Type: application/json
+
+{
+    "username":"zara",
+    "email":"zara@gmail.com",
+    "password":"zara123",
+    "phone":"9865423138"
+}
+
+#=====================assessment endpoints=======================
+#api call for listing assessment
+###
+GET http://127.0.0.1:8000/exams/assessment/
+Accept: application/json
+Authorization: Token b964e695444de149185f87bd965d5480482b1e93
+
+#api call for adding assessment
+###
+POST http://127.0.0.1:8000/exams/assessment/
+Content-Type: application/json
+Authorization: Token b964e695444de149185f87bd965d5480482b1e93
+
+{
+        "title": "Advanced SQL Assessment",
+        "batch": "SQL Batch A",
+        "language": "sql",
+        "exam_date": "2026-10-20T10:00:00",
+        "start_time": "10:00:00",
+        "duration": 60,
+        "status": "Completed"
+    }
+
+#api call for retrive assessment
+###
+GET http://127.0.0.1:8000/exams/assessment/3/
+Accept: application/json
+Authorization: Token b964e695444de149185f87bd965d5480482b1e93
+
+#api call for updating assessment
+###
+PUT http://127.0.0.1:8000/exams/assessment/5/
+Content-Type: application/json
+Authorization: Token b964e695444de149185f87bd965d5480482b1e93
+
+{
+        "title": "Python Coding Test",
+        "batch": "Python Batch B",
+        "language": "python",
+        "exam_date": "2026-10-30T14:00:00",
+        "start_time": "14:00:00",
+        "duration": 120,
+        "status": "Published"
+    }
+
+
+#api call for delete assessment
+###
+DELETE http://127.0.0.1:8000/exams/assessment/6/
+Accept: application/json
+Authorization: Token b964e695444de149185f87bd965d5480482b1e93
